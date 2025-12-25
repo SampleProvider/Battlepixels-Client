@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "Miniset";
+    src: url(/src/fonts/Miniset.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Birch Leaf";
+    src: url(/src/fonts/BirchLeaf.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0px;
+    overflow: hidden;
+    --border-size: 1px;
+    font-family: "Miniset";
+}
+* {
+    font-family: "Miniset";
+    box-sizing: content-box;
+}
+
+img {
+    image-rendering: pixelated;
+}
+
+.container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+}

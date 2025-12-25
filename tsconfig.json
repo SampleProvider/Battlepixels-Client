@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2024",
+    ],
+    "types": [
+      "node",
+      "@webgpu/types",
+    ],
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "node16",
+    "target": "es2024",
+    // "jsx": "react",
+    // "allowJs": true,
+    "moduleResolution": "node16"
+  }
+}

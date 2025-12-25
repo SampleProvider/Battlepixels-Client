@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Battlepixels</title>
+        <!-- <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script> -->
+        <script src="./dist/bundle.js" defer></script>
+        <link rel="stylesheet" type="text/css" href="./src/css/style.css">
+        <link rel="stylesheet" type="text/css" href="./src/css/game.css">
+        <link rel="stylesheet" type="text/css" href="./src/css/menu.css">
+        <link rel="stylesheet" type="text/css" href="./src/css/customizations.css">
+        <link rel="stylesheet" type="text/css" href="./src/css/transition.css">
+    </head>
+    <body>
+        <div id="menuContainer" class="container">
+            <canvas id="menuCanvas"></canvas>
+            <div id="menuTitle">Battlepixels</div>
+            <div id="signInContainer">
+                <label for="usernameInput">Username:</label>
+                <span><input type="text" id="usernameInput"></span>
+                <label for="passwordInput">Password:</label>
+                <span><input type="password" id="passwordInput"></span>
+                <label id="retypePasswordLabel" for="retypePasswordInput" style="display: none;">Retype Password:</label>
+                <span id="retypePasswordSpan" style="display: none;"><input type="password" id="retypePasswordInput"></span>
+                <div id="signInResponse" style="display: none;"></div>
+                <div id="signInLoading" style="display: none;"></div>
+                <button id="signInButton">Sign In</button>
+                <button id="createAccountButton">Create Account</button>
+            </div>
+            <div id="menuButtonsContainer" style="pointer-events: none;">
+                <div id="playButtonContainer" class="menuButtonContainer"><button id="playButton" class="menuButton">Play</button></div>
+                <div id="customizeButtonContainer" class="menuButtonContainer"><button id="customizeButton" class="menuButton">Customize</button></div>
+                <div id="settingsButtonContainer" class="menuButtonContainer"><button id="settingsButton" class="menuButton">Settings</button></div>
+                <div id="logOutButtonContainer" class="menuButtonContainer"><button id="logOutButton" class="menuButton">Log Out</button></div>
+            </div>
+            <div id="playerCustomizationsContainer">
+                <div id="playerCustomizationsSettings">
+                    <label for="playerBodyInput">Body:</label>
+                    <input type="color" id="playerBodyInput">
+                    <label for="playerBodyAInput">A:</label>
+                    <input type="number" min="0" max="1" step="0.1" id="playerBodyAInput">
+                    <label for="playerShirtInput">Shirt:</label>
+                    <input type="color" id="playerShirtInput">
+                    <label for="playerShirtAInput">A:</label>
+                    <input type="number" min="0" max="1" step="0.1" id="playerShirtAInput">
+                    <label for="playerPantsInput">Pants:</label>
+                    <input type="color" id="playerPantsInput">
+                    <label for="playerPantsAInput">A:</label>
+                    <input type="number" min="0" max="1" step="0.1" id="playerPantsAInput">
+                    <label for="playerPantsTypeInput">Pants Type:</label>
+                    <select id="playerPantsTypeInput">
+                        <option value="shorts">Shorts</option>
+                        <option value="skirt">Skirt</option>
+                    </select>
+                    <label for="playerHairInput">Hair:</label>
+                    <input type="color" id="playerHairInput">
+                    <label for="playerHairAInput">A:</label>
+                    <input type="number" min="0" max="1" step="0.1" id="playerHairAInput">
+                    <label for="playerHairTypeInput">Hair Type:</label>
+                    <select id="playerHairTypeInput">
+                        <option value="short">Short</option>
+                        <option value="long">Long</option>
+                    </select>
+                </div>
+                <canvas id="playerCustomizationsCanvas"></canvas>
+                <div id="playerName"></div>
+            </div>
+            <div id="buildCustomizationsContainer">
+            </div>
+        </div>
+        <div id="customizationsContainer" class="container" style="display: none;">
+            <canvas id="customizationsCanvas"></canvas>
+            <div id="customizationsSettings">
+                <div id="buildsContainer">
+                    <div class="build">
+                        <div class="buildWeapon">
+                            <div class="buildWeaponType">MG</div>
+                        </div>
+                        <div class="buildWeapon">
+                            <div class="buildWeaponType">SG</div>
+                        </div>
+                        <div class="buildWeapon">
+                            <div class="buildWeaponType">SR</div>
+                        </div>
+                        <div class="buildWeapon">
+                            <div class="buildWeaponType">RL</div>
+                        </div>
+                        <div class="buildWeapon">
+                            <div class="buildWeaponType">RG</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="currentBuildContainer">
+                    <div id="currentBuild">
+                        <div id="currentBuildStats"></div>
+                        <div id="currentBuildPerks"></div>
+                    </div>
+                    <div id="currentWeapon">
+                        <div id="currentWeaponStats"></div>
+                        <div id="currentWeaponPerks"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="gameContainer" class="container" style="display: none;">
+            <canvas id="webgpuCanvas"></canvas>
+            <canvas id="canvas"></canvas>
+            <div id="respawnContainer" style="display: none;">
+                <div id="respawnTitle">You Died!</div>
+                <div id="respawnTime">Respawn in 5.00s</div>
+                <button id="respawnButton">Respawn</button>
+            </div>
+            <div id="chatContainer">
+                <div id="chatMessages">
+                    <div class="chatMessage">Please be nice in the chat!</div>
+                </div>
+                <input type="text" id="chatInput" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+        <div id="transitionContainer" class="container" style="display: none;">
+            <div id="transitionBackground" class="container"></div>
+        </div>
+    </body>
+</html>
