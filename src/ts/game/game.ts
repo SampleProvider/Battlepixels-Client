@@ -7,7 +7,7 @@ import { Entity, EntityType } from "../entity/entity.js";
 import { Rig, Controls } from "../entity/rig.js";
 import { Projectile } from "../entity/projectile.js";
 import { clientPlayer } from "../entity/client-player.js";
-import { Particle, DamageParticle, CritDamageParticle, ExplosionParticle } from "../entity/particle.js";
+import { Particle, DamageParticle, CritDamageParticle, ExplosionParticle, FireworkParticle } from "../entity/particle.js";
 import { SimulatedMap } from "../map/map.js";
 import { MapRenderer, OffscreenCanvasMapRenderer } from "../map/renderer.js";
 import { webgpuSupported, WebgpuMapRenderer } from "../map/webgpu-renderer.js";
@@ -114,6 +114,11 @@ socket.on("updateData", (data) => {
             case "explosion":
                 for (let j = 0; j < data.particle[i].data.radius * 4; j++) {
                     new ExplosionParticle(data.particle[i].x, data.particle[i].y, data.particle[i].data.vectorX, data.particle[i].data.vectorY, data.particle[i].data.radius);
+                }
+                break;
+            case "firework":
+                for (let j = 0; j < data.particle[i].data.radius * 4; j++) {
+                    new FireworkParticle(data.particle[i].x, data.particle[i].y, data.particle[i].data.vectorX, data.particle[i].data.vectorY, data.particle[i].data.radius, data.particle[i].data.color);
                 }
                 break;
         }

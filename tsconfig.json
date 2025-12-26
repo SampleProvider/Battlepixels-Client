@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "noImplicitAny": true,
     "lib": [
       "dom",
       "es2024",
@@ -8,7 +9,6 @@
       "node",
       "@webgpu/types",
     ],
-    "noImplicitAny": true,
     "outDir": "./dist/",
     "module": "node16",
     "target": "es2024",
