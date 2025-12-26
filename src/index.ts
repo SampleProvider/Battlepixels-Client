@@ -9,7 +9,7 @@ window.addEventListener("resize", () => {
 onResize();
 
 // const serverIp = "http://spuh:3000/";
-const serverIp = "https://battlepixelsserver.onrender.com/";
+const serverIp = new URLSearchParams(window.location.search).get("ip") ?? "https://battlepixelsserver.onrender.com/";
 
 const socket = io(serverIp, {
     autoConnect: false,
