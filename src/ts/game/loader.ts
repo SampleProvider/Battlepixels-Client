@@ -16,6 +16,10 @@ interface ProjectileData {
     imageOffsetY?: number,
     width: number,
     height: number,
+    phantomFrames: number,
+    despawnTime: number,
+    gravity: number,
+    changeRotation: boolean,
     collisionEvents: CollisionEvent[],
 }
 
