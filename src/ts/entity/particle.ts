@@ -262,21 +262,7 @@ class FireworkParticle extends Particle {
         this.totalTime = 90 + Math.random() * 60;
         this.timer = this.totalTime;
 
-        if (color < 0.25) {
-            this.color = "rgb(" + (240 + Math.random() * 15) + ", 0, 0)";
-        }
-        else if (color < 0.5) {
-            this.color = "#ffff00";
-            this.color = "rgb(" + (240 + Math.random() * 15) + ", " + (120 + Math.random() * 15) + ", 0)";
-        }
-        else if (color < 0.75) {
-            this.color = "#00ff00";
-            this.color = "rgb(0, " + (240 + Math.random() * 15) + ", 0)";
-        }
-        else {
-            this.color = "#00ffff";
-            this.color = "rgb(0, " + (120 + Math.random() * 15) + ", " + (240 + Math.random() * 15) + ")";
-        }
+        this.color = "hsl(" + (color * 360 + Math.random() * 15) + ", 100%, 50%)";
         this.gravity = 0;
         this.trails.push({
             x: this.x,

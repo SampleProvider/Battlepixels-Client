@@ -3,7 +3,7 @@ import path from "path";
 
 
 export default {
-  entry: ["./src/ts/game/game.ts", "./src/ts/game/chat.ts"],
+  entry: ["./src/ts/game/game.ts", "./src/ts/game/chat.ts", "./src/ts/menu/menu.ts"],
   mode: "development",
   module: {
     rules: [

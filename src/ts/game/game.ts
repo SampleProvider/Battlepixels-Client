@@ -40,9 +40,7 @@ else {
     mapRenderer = new OffscreenCanvasMapRenderer();
 }
 
-setTimeout(() => {
-    socket.connect();
-}, 1000);
+socket.connect();
 socket.on("updateData", (data) => {
     if (clientPlayer.id == null) {
         console.log("didnt recieve config")
@@ -124,7 +122,7 @@ socket.on("updateData", (data) => {
         }
     }
     if (data.map.id != null) {
-        mapRenderer.setMap(new SimulatedMap(data.map.id, data.map.tick, data.map.width, data.map.height, data.map.grid, data.map.chunks));
+        mapRenderer.setMap(new SimulatedMap(data.map.id, data.map.tick, data.map.width, data.map.height, data.map.compressedGrid, data.map.chunks));
         clientPlayer.map = data.map.id;
         transitionToGame();
     }

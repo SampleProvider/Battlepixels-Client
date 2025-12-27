@@ -40,7 +40,7 @@ class SimulatedMap {
 
     static list = new Map<number, SimulatedMap>();
 
-    constructor(id: number, tick: number, width: number, height: number, grid: Float32Array, chunks: Int32Array) {
+    constructor(id: number, tick: number, width: number, height: number, compressedGrid: Float32Array, chunks: Int32Array) {
         this.id = id;
         this.tick = tick;
         this.width = width;
@@ -74,7 +74,7 @@ class SimulatedMap {
         this.nextChunks = new Int32Array(chunksArray);
         this.gridUpdatedChunks = new Int32Array(chunksArray);
 
-        this.grid = new Float32Array(grid);
+        this.decompressGrid(new Float32Array(compressedGrid));
         this.nextChunks = new Int32Array(chunks);
 
         SimulatedMap.list.set(this.id, this);
@@ -205,6 +205,42 @@ class SimulatedMap {
     addUpdates(updates: GridUpdate[]) {
         for (let i in updates) {
             this.addUpdate(updates[i].x, updates[i].y, updates[i].id, updates[i].speedX, updates[i].speedY);
+        }
+    }
+
+    compressGrid() {
+        let compressed = [];
+        let id = this.grid[0];
+        let speedX = this.grid[1];
+        let speedY = this.grid[2];
+        let backgroundId = this.grid[3];
+        let amount = 1;
+        for (let y = 0; y < this.height; y++) {
+            for (let x = 0; x < this.width; x++) {
+                if (id != this.grid[(x + y * this.width) * this.stride] || speedX != this.grid[(x + y * this.width) * this.stride + 1] || speedY != this.grid[(x + y * this.width) * this.stride + 2] || backgroundId != this.grid[(x + y * this.width) * this.stride + 3]) {
+                    compressed.push(...[id, speedX, speedY, backgroundId, amount]);
+                    id = this.grid[(x + y * this.width) * this.stride];
+                    speedX = this.grid[(x + y * this.width) * this.stride + 1];
+                    speedY = this.grid[(x + y * this.width) * this.stride + 2];
+                    backgroundId = this.grid[(x + y * this.width) * this.stride + 3];
+                    amount = 0;
+                }
+                amount += 1;
+            }
+        }
+        compressed.push(...[id, speedX, speedY, backgroundId, amount]);
+        return compressed;
+    }
+    decompressGrid(compressed: Float32Array) {
+        let index = 0;
+        for (let i = 0; i < compressed.length; i += 5) {
+            for (let j = 0; j < compressed[i + 4]; j++) {
+                this.grid[index * this.stride] = compressed[i];
+                this.grid[index * this.stride + 1] = compressed[i + 1];
+                this.grid[index * this.stride + 2] = compressed[i + 2];
+                this.grid[index * this.stride + 3] = compressed[i + 3];
+                index += 1;
+            }
         }
     }
 }
