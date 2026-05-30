@@ -10,15 +10,48 @@
     font-weight: normal;
     font-style: normal;
 }
+@font-face {
+    font-family: "Noto Sans";
+    src: url(/src/fonts/NotoSans-VariableFont_wdth\,wght.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Noto Sans";
+    src: url(/src/fonts/NotoSans-Italic-VariableFont_wdth\,wght.ttf);
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Google Sans";
+    src: url(/src/fonts/GoogleSansFlex-VariableFont_GRAD\,ROND\,opsz\,slnt\,wdth\,wght.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Google Sans Normal";
+    src: url(/src/fonts/GoogleSansFlex-VariableFont_GRAD\,ROND\,opsz\,slnt\,wdth\,wght.ttf);
+    font-weight: normal;
+    font-style: normal;
+    font-variation-settings: "GRAD" 0, "ROND" 100, "slnt" 0, "wdth" 100, "wght" 400;
+    font-optical-sizing: auto;
+}
 
 body {
     margin: 0px;
     overflow: hidden;
     --border-size: 1px;
-    font-family: "Miniset";
+    /* font-family: "Miniset"; */
+    font-family: "Noto Sans";
 }
 * {
-    font-family: "Miniset";
+    /* font-family: "Miniset"; */
+    /* font-family: "Noto Sans"; */
+    font-family: "Google Sans";
+    font-variation-settings: "GRAD" 0, "ROND" 100, "slnt" 0, "wdth" 100, "wght" 400;
+    font-optical-sizing: auto;
+    /* font-variation-settings: "opsz" auto, "slnt" 0, "wdth" 100, "wght" 400; */
+    font-size: 16px;
     box-sizing: content-box;
 }
 
@@ -26,8 +59,47 @@ img {
     image-rendering: pixelated;
 }
 
-.container {
+.fullscreen {
     position: absolute;
     width: 100vw;
     height: 100vh;
+}
+
+.button {
+    padding: 2px;
+    border: 4px solid black;
+    cursor: pointer;
+    transition: 50ms linear transform;
+    transform: translateY(0px);
+    border-radius: 2px;
+}
+.button:hover {
+    transform: translateY(-2px);
+}
+.button:active {
+    transform: translateY(2px);
+}
+.button:disabled {
+    cursor: not-allowed;
+}
+.button:disabled:hover {
+    transform: translateY(0px);
+}
+.button:disabled:active {
+    transform: translateY(0px);
+}
+
+#tooltip {
+    position: absolute;
+    border: 4px solid black;
+    background: linear-gradient(to bottom, #ffffff77, #dae0ea77);
+    color: black;
+    pointer-events: none;
+    border-radius: 2px;
+}
+#tooltipTitle {
+    font-size: 24px;
+}
+#tooltipContent {
+    font-size: 16px;
 }

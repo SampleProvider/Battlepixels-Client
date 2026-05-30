@@ -1,0 +1,978 @@
+#cinematicCameraTop, #cinematicCameraBottom {
+    position: absolute;
+    left: 0px;
+    width: 100vw;
+    height: 12.5vh;
+    background-color: black;
+    pointer-events: none;
+    transition: 500ms ease-out transform;
+}
+#cinematicCameraTop {
+    top: 0px;
+    transform: translateY(-100%);
+}
+#cinematicCameraBottom {
+    bottom: 0px;
+    transform: translateY(100%);
+}
+
+#fpsSvg {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 75px;
+    height: 25px;
+    overflow: visible;
+    pointer-events: none;
+}
+#fpsText {
+    paint-order: stroke fill;
+    font-size: 16px;
+    transform: translate(-8px, -8px);
+}
+/* #fpsOutline {
+    -webkit-text-stroke: 4px black;
+}
+#fps {
+    color: white;
+} */
+
+#chat {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    width: 30vw;
+    height: 160px;
+    border: 4px solid black;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    transform: translateY(0px);
+    transition: 1500ms ease-in transform, opacity ease-in-out 500ms;
+}
+#chat.hidden {
+    opacity: 0;
+    transform: translateY(100%);
+}
+#chatMessages {
+    flex-grow: 1;
+    /* background-color: #ffffff77; */
+    background: linear-gradient(to bottom, #ffffff77, #dae0ea77);
+    /* opacity: 0.5; */
+    overflow-y: scroll;
+    border-bottom: 4px solid black;
+}
+.chatMessage {
+    font-size: 16px;
+    margin-left: 2px;
+}
+#chatInput {
+    appearance: none;
+    background-color: white;
+    border: none;
+    outline: none;
+}
+#chatInput:focus {
+    /* background-color: #eeeeee; */
+	box-shadow: 0 0 0 2px white;
+    outline: 1px solid black;
+    border-radius: 2px;
+}
+
+#hud {
+    position: absolute;
+    left: 50vw;
+    bottom: 8px;
+    width: 0px;
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    user-select: none;
+    opacity: 1;
+    transform: translateX(-50%);
+    transition: 1500ms ease-in transform, opacity ease-in-out 500ms;
+}
+#hud.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(100%);
+}
+#healthBar {
+    position: relative;
+    /* background: linear-gradient(to right top, #990000, #ff2200); */
+    background-color: #444444;
+    border: 4px solid black;
+    border-radius: 2px;
+    width: 400px;
+    height: 40px;
+}
+#healthBarBackgroundContainer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#healthBarBackground {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 400px;
+    height: 40px;
+    background: linear-gradient(calc(atan2(400px, -40px)), #990000, #ff2200);
+}
+#healthBarSvg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    /* font-family: "Blue"; */
+}
+#healthBarText {
+    paint-order: stroke fill;
+    font-size: 24px;
+}
+/* #healthBarTextOutline, #healthBarText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+}
+#healthBarTextOutline {
+    -webkit-text-stroke: 4px black;
+}
+#healthBarText {
+    color: white;
+} */
+#ammoBar {
+    position: relative;
+    /* background: linear-gradient(to right bottom, #aa6600, #ff9900); */
+    background-color: #444444;
+    border: 4px solid black;
+    border-radius: 2px;
+    width: 380px;
+    height: 20px;
+    margin-bottom: 4px;
+}
+#ammoBarBackgroundContainer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#ammoBarBackground {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 380px;
+    height: 20px;
+    background: linear-gradient(calc(atan2(380px, -20px)), #aa6600, #ff9900);
+}
+#ammoBarSvg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    /* font-family: "Blue"; */
+}
+#ammoBarText {
+    paint-order: stroke fill;
+    font-size: 16px;
+}
+/* #ammoBarTextOutline, #ammoBarText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+}
+#ammoBarTextOutline {
+    -webkit-text-stroke: 4px black;
+}
+#ammoBarText {
+    color: white;
+} */
+#reloadBar {
+    position: relative;
+    /* background: linear-gradient(to right bottom, #00aa00, #00ff00); */
+    /* background: linear-gradient(calc(atan2(380px + var(--border-size) * 8, -4px)), #00aa00, #00ff00); */
+    width: calc(380px + var(--border-size) * 8);
+    height: 4px;
+}
+#reloadBarBackgroundContainer {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+#reloadBarBackground {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: calc(380px + var(--border-size) * 8);
+    height: 4px;
+    background: linear-gradient(calc(atan2(380px + var(--border-size) * 8, -4px)), #00aa00, #00ff00);
+}
+#reloadBarSvg {
+    position: absolute;
+    left: 50%;
+    top: 2px;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    /* font-family: "Blue"; */
+    z-index: 1;
+    overflow: visible;
+}
+#reloadBarText {
+    paint-order: stroke fill;
+    font-size: 16px;
+    z-index: 1;
+}
+/* #reloadBarTextOutline, #reloadBarText {
+    position: absolute;
+    left: 50%;
+    top: 2px;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    z-index: 1;
+}
+#reloadBarTextOutline {
+    -webkit-text-stroke: 4px black;
+}
+#reloadBarText {
+    color: #00ff00;
+} */
+#weapons {
+    display: flex;
+    gap: 4px;
+}
+.weapon {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    border: 4px solid black;
+    border-radius: 2px;
+    background-color: #888888;
+    cursor: pointer;
+    transition: transform 50ms ease-in-out;
+}
+.weapon:hover {
+    transform: scale(1.08);
+}
+.weapon.selected {
+    border-color: #0099ff;
+}
+.weaponBackgroundContainer {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.weaponBackground {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(to bottom, #ff9900, #aa6600);
+}
+.weaponCooldownContainer {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.weaponCooldown {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 50px;
+    height: 50px;
+    background-color: #ffffff77;
+}
+.weaponImage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    image-rendering: pixelated;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(4) rotate(-45deg);
+}
+.weaponIndexSvg {
+    position: absolute;
+    /* left: 4px; */
+    /* top: 0px; for miniset font */
+    /* top: 2px; */
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    /* transform: translateY(-1px); */
+}
+.weaponIndex {
+    paint-order: stroke fill;
+    font-size: 16px;
+    transform: translate(4px, 4px);
+}
+/* .weaponIndexOutline, .weaponIndex {
+    position: absolute;
+    font-size: 16px;
+    left: 4px; */
+    /* top: 0px; for miniset font */
+    /* top: 2px;
+    transform: translateY(-1px);
+}
+.weaponIndexOutline {
+    -webkit-text-stroke: 4px black;
+}
+.weaponIndex {
+    color: white;
+} */
+.weaponTypeSvg {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    /* right: 4px;
+    bottom: 0px; */
+    width: 100%;
+    height: 100%;
+    /* transform: translateY(1px); */
+}
+.weaponType {
+    paint-order: stroke fill;
+    font-size: 16px;
+    transform: translate(-4px, -4px);
+}
+/* .weaponTypeOutline, .weaponType {
+    position: absolute;
+    font-size: 16px; */
+    /* right: 2px; for miniset font */
+    /* right: 4px;
+    bottom: 0px;
+    transform: translateY(1px);
+}
+.weaponTypeOutline {
+    -webkit-text-stroke: 4px black;
+}
+.weaponType {
+    color: white;
+} */
+
+#currentQuest {
+    position: absolute;
+    left: 8px;
+    top: 20vh;
+    user-select: none;
+}
+#currentQuestName {
+    font-size: 24px;
+    color: gold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+#currentQuestObjective {
+    font-size: 16px;
+    color: black;
+    pointer-events: none;
+}
+
+.dialogue {
+    position: absolute;
+    left: 50vw;
+    bottom: calc(12.5vh + 8px);
+    display: flex;
+    gap: 8px;
+    opacity: 1;
+    transform: translateX(-50%);
+    transition: 1500ms ease-out transform, opacity ease-in-out 500ms;
+}
+.dialoguePortrait {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(to bottom, #ffffff77, #dae0ea77);
+    border: 4px solid black;
+    border-radius: 2px;
+}
+.dialoguePortraitCanvas {
+    width: 180px;
+    height: 180px;
+    image-rendering: pixelated;
+}
+.dialoguePortraitNameOutline, .dialoguePortraitName {
+    position: absolute;
+    bottom: 0px;
+    width: 180px;
+    font-size: 24px;
+    text-align: center;
+}
+.dialoguePortraitNameOutline {
+    -webkit-text-stroke: 8px black;
+}
+.dialoguePortraitName {
+    color: white;
+}
+.dialogueText {
+    /* position: absolute;
+    left: 50vw;
+    bottom: calc(12.5vh + 8px + 156px + 8px); */
+    /* bottom: 302px; */
+    width: 40vw;
+    height: 176px;
+    padding: 2px;
+    font-size: 24px;
+    text-align: center;
+    word-wrap: break-word;
+    overflow-y: scroll;
+    /* background: linear-gradient(135deg, #dae0ea, #b3b9d1); */
+    /* background-color: #dae0ea; */
+    background: linear-gradient(to bottom, #ffffff77, #dae0ea77);
+    border: 4px solid black;
+    border-radius: 2px;
+    /* transform: translateX(-50%); */
+}
+.dialogueResponses {
+    /* position: absolute;
+    left: 50vw;
+    bottom: calc(12.5vh + 8px); */
+    /* top: calc(100vh - 302px + 8px); */
+    /* transform: translateX(-50%); */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dialogueResponseContainer {
+    opacity: 1;
+    transform: translateX(0px);
+    transition: 500ms ease-out transform, opacity ease-in-out 500ms;
+}
+.dialogueResponseContainer.hidden {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(5vw);
+}
+.dialogueResponse {
+    width: 20vw;
+    background: linear-gradient(to bottom, #ffffff77, #dae0ea77);
+    font-size: 16px;
+    text-align: center;
+}
+
+.window {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    /* background: linear-gradient(135deg, #dae0ea, #b3b9d1); */
+    /* background-color: #dae0ea; */
+    /* background-color: #ffffff66; */
+    background: linear-gradient(to bottom, #ffffff77, #dae0ea77);
+    /* backdrop-filter: blur(10px); */
+    border: 4px solid black;
+    border-radius: 2px;
+    display: grid;
+    grid-template-rows: 38px auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+.windowBar {
+    position: relative;
+    cursor: move;
+    user-select: none;
+    border-bottom: 8px;
+    grid-column: span 2;
+    height: 30px;
+    padding: 4px;
+}
+.windowBarTitle {
+    font-size: 24px;
+    color: black;
+}
+.windowBarCloseButton {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 28px;
+    height: 28px;
+    padding: 0px;
+    /* background: linear-gradient(to bottom, #df3e23, #b4202a); */
+    background-image: url("/src/img/close_button.png");
+    background-size: 100%;
+    image-rendering: pixelated;
+}
+.windowTabs {
+    position: relative;
+    border-right: 4px solid black;
+    border-top: 4px solid black;
+}
+.windowTabButtons {
+    width: 150px;
+    border-top: 4px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px;
+    overflow-y: scroll;
+}
+
+.windowTab {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+.windowTabButton {
+    font-size: 16px;
+    text-align: center;
+}
+.windowTabButton.selected {
+    background-color: #6ca85c99;
+}
+.windowTabLabel {
+    font-size: 20px;
+    margin-top: 8px;
+    text-align: center;
+}
+.windowBackButton {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 80px;
+    text-align: center;
+    /* background: linear-gradient(to right, #bd4f47, #cf6262); */
+    background: linear-gradient(to right, #df3e23, #b4202a);
+}
+
+#window {
+    /* width: 774px; */
+    /* width: 789px; */
+    /* width: 790px; */
+    width: 1200px;
+    /* fix this later when styling is added for scrollbars */
+    /* height: 600px; */
+    height: 800px;
+}
+
+#changelogTab {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    padding: 4px;
+    gap: 4px;
+}
+.changelogUpdate {
+    border: 4px solid black;
+    border-radius: 2px;
+}
+.changelogName {
+    font-size: 32px;
+    padding: 2px;
+}
+.changelogDate {
+    font-size: 12px;
+    padding: 2px;
+}
+.changelogDescription {
+    padding: 2px;
+}
+
+#questTab {
+    display: flex;
+    flex-direction: column;
+}
+#questList {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    flex-grow: 1;
+    border-bottom: 4px solid black;
+}
+#questHeader {
+    position: sticky;
+    font-size: 20px;
+}
+.quest {
+    display: grid;
+    grid-template-columns: 32px repeat(3, minmax(0, 1fr));
+    grid-auto-rows: min-content;
+    border-bottom: 4px solid black;
+    gap: 8px;
+}
+.quest div {
+    display: flex;
+    align-items: center;
+}
+.questIcon {
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    cursor: pointer;
+    transition: transform 50ms ease-in-out;
+}
+.questIcon:hover {
+    transform: scale(1.08);
+}
+.questName {
+    cursor: pointer;
+}
+.questName:hover {
+    text-decoration: underline;
+}
+#questHeader .questName {
+    cursor: auto;
+}
+#questHeader .questName:hover {
+    text-decoration: none;
+}
+#questList div {
+    padding: 2px;
+}
+#questProgress {
+    padding: 2px;
+}
+#questInfo {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 8px;
+    overflow-y: scroll;
+}
+#questName {
+    font-size: 24px;
+    text-align: center;
+}
+#questDescription {
+    text-align: center;
+}
+#questChallenges {
+    display: flex;
+    flex-direction: column;
+    border: 4px solid black;
+    border-radius: 2px;
+}
+.questChallenge {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    cursor: pointer;
+    /* gap: 8px; */
+    /* column-gap: 8px; */
+    border-top: 4px solid black;
+}
+.questChallenge.selected {
+    background-color: #6ca85c99;
+    background-color: #59c13577;
+}
+.questChallenge:first-child {
+    border-top: none;
+}
+.questChallengeName {
+    /* flex-grow: 1; */
+    padding: 4px;
+}
+.questChallengeLevel {
+    /* flex-grow: 1; */
+    padding: 4px;
+}
+.questChallengeDescription {
+    grid-column: span 3;
+    border-top: 4px solid black;
+    padding: 4px;
+}
+.questChallengeDescription.hidden {
+    display: none;
+}
+#startQuestButton {
+    /* background: linear-gradient(to right, #6ca85c, #458f58); */
+    background: linear-gradient(to right, #59c135, #14a02e);
+}
+
+#weaponsTab {
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+}
+#weaponList, #weaponInfo {
+    display: flex;
+    flex-direction: column;
+    min-height: 0px;
+}
+#weaponList {
+    border-right: 4px solid black;
+}
+
+#equippedWeaponsTitle, #unequippedWeaponsTitle {
+    text-align: center;
+    border-bottom: 4px solid black;
+}
+#equippedWeapons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-bottom: 4px solid black;
+}
+#unequippedWeapons {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    padding: 2px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-grow: 1;
+}
+
+#equippedWeaponInfo, #unequippedWeaponInfo {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+}
+#unequippedWeaponInfo {
+    border-top: 4px solid black;
+}
+.weaponName {
+    font-size: 32px;
+    padding: 2px;
+    text-align: center;
+}
+.weaponDescription {
+    padding: 2px;
+    text-align: center;
+}
+
+#weaponList .weapon {
+    display: inline-block;
+    width: 64px;
+    height: 64px;
+    margin: 2px;
+    line-height: normal;
+}
+#weaponList .weaponImage {
+    transform: translate(-50%, -50%) scale(calc(4 * 64 / 50)) rotate(-45deg);
+}
+#weaponList .weaponBackground {
+    width: 64px;
+    height: 64px;
+}
+#weaponList .weaponIndex {
+    font-size: 20px;
+    transform: translate(4.5px, 4.5px);
+}
+#weaponList .weaponType {
+    font-size: 20px;
+    transform: translate(-4.5px, -4.5px);
+}
+
+#weaponList .weapon.selected {
+    border-color: #0099ff;
+}
+
+#weaponInfo .weapon {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin: 4px;
+    line-height: normal;
+    grid-row: span 2;
+}
+#weaponInfo .weaponImage {
+    transform: translate(-50%, -50%) scale(calc(4 * 100 / 50)) rotate(-45deg);
+}
+#weaponInfo .weaponBackground {
+    width: 100px;
+    height: 100px;
+    /* background: none; */
+}
+#weaponInfo .weaponIndex {
+    font-size: 32px;
+    transform: translate(6px, 6px);
+}
+#weaponInfo .weaponType {
+    font-size: 32px;
+    transform: translate(-6px, -6px);
+}
+
+#inventoryTab {
+    padding: 2px;
+    line-height: 0px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.itemImage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    image-rendering: pixelated;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(4);
+}
+
+#perksTab {
+    position: relative;
+    /* display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 4px;
+    gap: 4px; */
+}
+
+#perkCanvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+#perkPoints {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+#perkInfo {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+}
+
+/* #perkPoints {
+    grid-column: span 2;
+}
+#equippedPerksTitle, #unequippedPerksTitle {
+    font-size: 16px;
+}
+#equippedPerks, #unequippedPerks {
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    gap: 4px;
+    border: 4px solid black;
+    border-radius: 2px;
+    overflow-y: scroll;
+} */
+
+.perk {
+    border: 4px solid black;
+    border-radius: 2px;
+    cursor: pointer;
+}
+.perkTitle {
+    position: relative;
+    font-size: 16px;
+    padding: 2px;
+}
+.perkCost {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    text-align: right;
+}
+.perkDescription {
+    font-size: 16px;
+    padding: 2px;
+    border-top: 4px solid black;
+}
+.perkDescription.hidden {
+    display: none;
+}
+.perkEquipButton {
+    display: block;
+    width: 123px;
+    height: fit-content;
+    margin-top: 8px;
+    font-size: 16px;
+    /* background: linear-gradient(to right, #6ca85c77, #458f5877); */
+    background: linear-gradient(to right, #59c13577, #14a02e77);
+    text-align: center;
+}
+
+#customizeTab {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 4px;
+    gap: 4px;
+}
+#customizeCanvas {
+    width: 150px;
+    height: 300px;
+    border: 4px solid black;
+    border-radius: 2px;
+    grid-row: span 2;
+    image-rendering: pixelated;
+}
+#customizeButton {
+    width: 123px;
+    height: fit-content;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    background: linear-gradient(to right, #20d6c7, #249fde);
+}
+
+/* #pauseScreen {
+    background: #000000;
+}
+#pauseTabButtons {
+    position: absolute;
+    left: 50vw;
+    top: 0px;
+    border: 4px solid white;
+    border-top: none;
+    transform: translateX(-50%);
+    display: flex;
+}
+.pauseTabButton {
+    width: 48px;
+    height: 48px;
+    border-right: 4px solid white;
+}
+.pauseTabButton:last-child {
+    border-right: none;
+}
+.pauseTabTitle {
+    position: absolute;
+    left: 50vw;
+    top: 10vh;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: white;
+} */
+
+/* #equippedWeapons {
+    position: absolute;
+    left: 50vw;
+    top: 30vh;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: 3vw;
+}
+#equippedWeapons .weapon {
+    width: 10vw;
+    height: 10vw;
+    border: none;
+    background: none;
+}
+#equippedWeapons .weapon:hover {
+    transform: scale(1.08);
+}
+#equippedWeapons .weapon.selected {
+    border-color: #0099ff;
+    transform: scale(2);
+} */

@@ -2,19 +2,28 @@
 <html>
     <head>
         <title>Battlepixels</title>
+        <meta charset="utf-8">
+        <meta name="title" content="Battlepixels">
+        <meta name="description" content="omg battlepixels confirmed">
+        <meta name="url" content="https://battlepixels.web.app/">
+        <meta name="image" content="https://battlepixels.web.app/src/img/bannerSmall.png">
+        <link rel="icon" href="./src/img/favicon.png" type="image/x-icon">
         <!-- <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script> -->
         <script src="./dist/bundle.js" defer></script>
         <link rel="stylesheet" type="text/css" href="./src/css/style.css">
         <link rel="stylesheet" type="text/css" href="./src/css/game.css">
+        <link rel="stylesheet" type="text/css" href="./src/css/ui.css">
         <link rel="stylesheet" type="text/css" href="./src/css/menu.css">
-        <link rel="stylesheet" type="text/css" href="./src/css/customizations.css">
         <link rel="stylesheet" type="text/css" href="./src/css/transition.css">
+        <link rel="stylesheet" type="text/css" href="./src/css/disconnected.css">
     </head>
     <body>
-        <div id="menuContainer" class="container">
-            <canvas id="menuCanvas"></canvas>
-            <div id="menuTitle">Battlepixels</div>
-            <div id="signInContainer">
+        <canvas id="webgpuCanvas"></canvas>
+        <canvas id="canvas"></canvas>
+        <div id="menuScreen">
+            <!-- <div id="menuTitle"><span style="color: #285cc4;">Battle</span>pixels</div> -->
+            <div id="menuTitle">Battle<span style="color: #20d6c7;">pixels</span></div>
+            <div id="signIn">
                 <label for="usernameInput">Username:</label>
                 <span><input type="text" id="usernameInput"></span>
                 <label for="passwordInput">Password:</label>
@@ -23,101 +32,202 @@
                 <span id="retypePasswordSpan" style="display: none;"><input type="password" id="retypePasswordInput"></span>
                 <div id="signInResponse" style="display: none;"></div>
                 <div id="signInLoading" style="display: none;"></div>
-                <button id="signInButton">Sign In</button>
-                <button id="createAccountButton">Create Account</button>
+                <button id="signInButton" class="button">Sign In</button>
+                <button id="createAccountButton" class="button">Create Account</button>
             </div>
-            <div id="menuButtonsContainer" style="pointer-events: none;">
-                <div id="playButtonContainer" class="menuButtonContainer"><button id="playButton" class="menuButton">Play</button></div>
-                <div id="customizeButtonContainer" class="menuButtonContainer"><button id="customizeButton" class="menuButton">Customize</button></div>
-                <div id="settingsButtonContainer" class="menuButtonContainer"><button id="settingsButton" class="menuButton">Settings</button></div>
-                <div id="logOutButtonContainer" class="menuButtonContainer"><button id="logOutButton" class="menuButton">Log Out</button></div>
-            </div>
-            <div id="playerCustomizationsContainer">
-                <div id="playerCustomizationsSettings">
-                    <label for="playerBodyInput">Body:</label>
-                    <input type="color" id="playerBodyInput">
-                    <label for="playerBodyAInput">A:</label>
-                    <input type="number" min="0" max="1" step="0.1" id="playerBodyAInput">
-                    <label for="playerShirtInput">Shirt:</label>
-                    <input type="color" id="playerShirtInput">
-                    <label for="playerShirtAInput">A:</label>
-                    <input type="number" min="0" max="1" step="0.1" id="playerShirtAInput">
-                    <label for="playerPantsInput">Pants:</label>
-                    <input type="color" id="playerPantsInput">
-                    <label for="playerPantsAInput">A:</label>
-                    <input type="number" min="0" max="1" step="0.1" id="playerPantsAInput">
-                    <label for="playerPantsTypeInput">Pants Type:</label>
-                    <select id="playerPantsTypeInput">
-                        <option value="shorts">Shorts</option>
-                        <option value="skirt">Skirt</option>
-                    </select>
-                    <label for="playerHairInput">Hair:</label>
-                    <input type="color" id="playerHairInput">
-                    <label for="playerHairAInput">A:</label>
-                    <input type="number" min="0" max="1" step="0.1" id="playerHairAInput">
-                    <label for="playerHairTypeInput">Hair Type:</label>
-                    <select id="playerHairTypeInput">
-                        <option value="short">Short</option>
-                        <option value="long">Long</option>
-                    </select>
-                </div>
-                <canvas id="playerCustomizationsCanvas"></canvas>
-                <div id="playerName"></div>
-            </div>
-            <div id="buildCustomizationsContainer">
+            <div id="menuButtons" style="pointer-events: none;">
+                <div id="playButtonContainer" class="menuButtonContainer"><button id="playButton" class="menuButton button">Play</button></div>
             </div>
         </div>
-        <div id="customizationsContainer" class="container" style="display: none;">
-            <canvas id="customizationsCanvas"></canvas>
-            <div id="customizationsSettings">
-                <div id="buildsContainer">
-                    <div class="build">
-                        <div class="buildWeapon">
-                            <div class="buildWeaponType">MG</div>
-                        </div>
-                        <div class="buildWeapon">
-                            <div class="buildWeaponType">SG</div>
-                        </div>
-                        <div class="buildWeapon">
-                            <div class="buildWeaponType">SR</div>
-                        </div>
-                        <div class="buildWeapon">
-                            <div class="buildWeaponType">RL</div>
-                        </div>
-                        <div class="buildWeapon">
-                            <div class="buildWeaponType">RG</div>
-                        </div>
-                    </div>
-                </div>
-                <div id="currentBuildContainer">
-                    <div id="currentBuild">
-                        <div id="currentBuildStats"></div>
-                        <div id="currentBuildPerks"></div>
-                    </div>
-                    <div id="currentWeapon">
-                        <div id="currentWeaponStats"></div>
-                        <div id="currentWeaponPerks"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="gameContainer" class="container" style="display: none;">
-            <canvas id="webgpuCanvas"></canvas>
-            <canvas id="canvas"></canvas>
-            <div id="respawnContainer" style="display: none;">
+        <div id="gameScreen" style="display: none;">
+            <div id="cinematicCameraTop"></div>
+            <div id="cinematicCameraBottom"></div>
+            <div id="respawnScreen" class="fullscreen" style="display: none;">
                 <div id="respawnTitle">You Died!</div>
-                <div id="respawnTime">Respawn in 5.00s</div>
-                <button id="respawnButton">Respawn</button>
+                <button id="respawnButton" class="button">Respawn</button>
             </div>
-            <div id="chatContainer">
+            <!-- <div id="fpsOutline">FPS: 0</div>
+            <div id="fps">FPS: 0</div> -->
+            <svg id="fpsSvg">
+                <text id="fpsText" x="100%" y="100%" text-anchor="end" dominant-baseline="auto" stroke="black" stroke-width="4" stroke-linejoin="round" fill="white">FPS: 0</text>
+            </svg>
+            <div id="chat">
                 <div id="chatMessages">
                     <div class="chatMessage">Please be nice in the chat!</div>
                 </div>
                 <input type="text" id="chatInput" autocomplete="off" spellcheck="false">
             </div>
+            <div id="hud">
+                <div id="healthBar">
+                    <div id="healthBarBackgroundContainer">
+                        <div id="healthBarBackground"></div>
+                    </div>
+                    <svg id="healthBarSvg">
+                        <text id="healthBarText" x="50%" y="50%" text-anchor="middle" dominant-baseline="central" stroke="black" stroke-width="4" stroke-linejoin="round" fill="white">100 / 100</text>
+                    </svg>
+                    <!-- <svg id="healthBarText" viewBox="0 0 200 50">
+                    <text x="10" y="40" 
+                            stroke="black" 
+                            stroke-width="2" 
+                            stroke-linejoin="round" 
+                            fill="white" 
+                            style="font: bold 30px sans-serif;">
+                        SMOOTH
+                    </text>
+                    </svg> -->
+                    <!-- <div id="healthBarTextOutline">100 / 100</div> -->
+                    <!-- <div id="healthBarText">100 / 100</div> -->
+                </div>
+                <div id="ammoBar">
+                    <div id="ammoBarBackgroundContainer">
+                        <div id="ammoBarBackground"></div>
+                    </div>
+                    <svg id="ammoBarSvg">
+                        <text id="ammoBarText" x="50%" y="50%" text-anchor="middle" dominant-baseline="central" stroke="black" stroke-width="4" stroke-linejoin="round" fill="white">1 / 1</text>
+                    </svg>
+                    <!-- <div id="ammoBarTextOutline">1 / 1</div>
+                    <div id="ammoBarText">1 / 1</div> -->
+                </div>
+                <div id="reloadBar">
+                    <div id="reloadBarBackgroundContainer">
+                        <div id="reloadBarBackground"></div>
+                    </div>
+                    <svg id="reloadBarSvg">
+                        <text id="reloadBarText" x="50%" y="50%" text-anchor="middle" dominant-baseline="central" stroke="black" stroke-width="4" stroke-linejoin="round" fill="lime">Reloading...</text>
+                    </svg>
+                    <!-- <div id="reloadBarTextOutline">Reloading...</div>
+                    <div id="reloadBarText">Reloading...</div> -->
+                </div>
+                <div id="weapons"></div>
+            </div>
+            <div id="currentQuest" style="display: none;">
+                <div id="currentQuestName"></div>
+                <div id="currentQuestObjective"></div>
+            </div>
+            <div id="dialogueScreen" class="fullscreen" style="display: none;"></div>
+            <div id="window" class="window">
+                <div class="windowBar">
+                    <div class="windowBarTitle">Draggable Window</div>
+                    <button class="windowBarCloseButton button"></button>
+                </div>
+                <div class="windowTabs">
+                    <div id="inboxTab" class="windowTab"></div>
+                    <div id="changelogTab" class="windowTab"></div>
+                    <!-- <div id="questTab" class="windowTab">
+                        <div id="questList"></div>
+                        <div id="questProgress"><span id="questProgressQuests">Quests: 1/1</span>, <span id="questProgressChallenges">Challenges: 1/1</span>, <span id="questProgressStars">Stars: 1/1</span></div>
+                        <div id="questInfo" style="display: none;">
+                            <div id="questBackButton" class="windowBackButton button">Back</div>
+                            <div id="questName"></div>
+                            <div id="questDescription"></div>
+                            <div id="questChallenges"></div>
+                            <button id="startQuestButton" class="button">Start Quest</button>
+                        </div>
+                    </div> -->
+                    <div id="profileTab" class="windowTab"></div>
+                    <div id="weaponsTab" class="windowTab">
+                        <div id="weaponList">
+                            <div id="equippedWeaponsTitle">Equipped Weapons:</div>
+                            <div id="equippedWeapons"></div>
+                            <div id="unequippedWeaponsTitle">Unequipped Weapons:</div>
+                            <div id="unequippedWeapons"></div>
+                        </div>
+                        <div id="weaponInfo">
+                            <div id="equippedWeaponInfo">
+                                <div class="weapon">
+                                    <div class="weaponBackground"></div>
+                                    <img class="weaponImage">
+                                    <svg class="weaponIndexSvg">
+                                        <text class="weaponIndex" x="0%" y="0%" text-anchor="start" dominant-baseline="hanging" stroke="black" stroke-width="8" stroke-linejoin="round" fill="white"></text>
+                                    </svg>
+                                    <svg class="weaponTypeSvg">
+                                        <text class="weaponType" x="100%" y="100%" text-anchor="end" dominant-baseline="auto" stroke="black" stroke-width="8" stroke-linejoin="round" fill="white"></text>
+                                    </svg>
+                                </div>
+                                <div class="weaponName"></div>
+                                <div class="weaponDescription"></div>
+                            </div>
+                            <div id="unequippedWeaponInfo" style="visibility: hidden;">
+                                <div class="weapon">
+                                    <div class="weaponBackground"></div>
+                                    <img class="weaponImage">
+                                    <svg class="weaponIndexSvg">
+                                        <text class="weaponIndex" x="0%" y="0%" text-anchor="start" dominant-baseline="hanging" stroke="black" stroke-width="8" stroke-linejoin="round" fill="white"></text>
+                                    </svg>
+                                    <svg class="weaponTypeSvg">
+                                        <text class="weaponType" x="100%" y="100%" text-anchor="end" dominant-baseline="auto" stroke="black" stroke-width="8" stroke-linejoin="round" fill="white"></text>
+                                    </svg>
+                                </div>
+                                <div class="weaponName"></div>
+                                <div class="weaponDescription"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="perksTab" class="windowTab">
+                        <canvas id="perkCanvas"></canvas>
+                        <div id="perkPoints">Perk Points: 0</div>
+                        <div id="perkInfo">
+                            <div id="perkName"></div>
+                            <div id="perkCost"></div>
+                            <div id="perkDescription"></div>
+                        </div>
+                        <!-- <div id="equippedPerksTitle">Equipped Perks</div>
+                        <div id="unequippedPerksTitle">Unequipped Perks</div>
+                        <div id="equippedPerks"></div>
+                        <div id="unequippedPerks"></div> -->
+                    </div>
+                    <div id="customizeTab" class="windowTab">
+                        <canvas id="customizeCanvas"></canvas>
+                        <button id="customizeButton" class="button">Upload skin</button>
+                        <div id="customizeInfo">Your skin should follow <a href="./src/img/player_uv_lookup.png" target="_blank">this sample UV</a>.</div>
+                    </div>
+                </div>
+                <div class="windowTabButtons">
+                    <div class="windowTabButton button">Inbox</div>
+                    <div class="windowTabButton button">Changelog</div>
+                    <!-- <div class="windowTabLabel">Progress:</div>
+                    <div class="windowTabButton button">Quest</div> -->
+                    <div class="windowTabLabel">Combat:</div>
+                    <div class="windowTabButton button">Profile</div>
+                    <div class="windowTabButton button">Weapons</div>
+                    <div class="windowTabButton button">Perks</div>
+                    <div class="windowTabLabel">Preferences:</div>
+                    <div class="windowTabButton button">Customize</div>
+                </div>
+            </div>
+            <!-- <div id="pauseScreen" class="fullscreen" style="display: none;"> -->
+            <!-- <div id="pauseScreen" class="fullscreen">
+                <div id="pauseTabButtons">
+                    <div class="pauseTabButton"></div>
+                    <div class="pauseTabButton"></div>
+                    <div class="pauseTabButton"></div>
+                    <div class="pauseTabButton"></div>
+                    <div class="pauseTabButton"></div>
+                    <div class="pauseTabButton"></div>
+                </div>
+                <div id="weaponsTab" class="fullscreen">
+                    <div class="pauseTabTitle">Weapons</div>
+                    <div id="equippedWeapons"></div>
+                    <div id="weapons">
+                        <div class="weapon"></div>
+                        <div class="weapon"></div>
+                        <div class="weapon"></div>
+                        <div class="weapon"></div>
+                        <div class="weapon"></div>
+                        <div class="weapon"></div>
+                    </div>
+                </div>
+            </div> -->
         </div>
-        <div id="transitionContainer" class="container" style="display: none;">
-            <div id="transitionBackground" class="container"></div>
+        <!-- <div id="transitionScreen" class="fullscreen" style="display: none;">
+            <div id="transitionBackground" class="fullscreen"></div>
+        </div>
+        <div id="disconnectedScreen" class="fullscreen" style="display: none;">
+            <button id="disconnectedButton">DISCONNECTED</button>
+        </div> -->
+        <div id="tooltip" style="display: none;">
+            <div id="tooltipTitle"></div>
+            <div id="tooltipContent"></div>
         </div>
     </body>
 </html>

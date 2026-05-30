@@ -1,5 +1,5 @@
 import { socket } from "../../index.js";
-import { keys } from "./controls.js";
+import { keys } from "../game/controls.js";
 
 let chatMessages = document.getElementById("chatMessages");
 let chatInput = document.getElementById("chatInput") as HTMLInputElement;

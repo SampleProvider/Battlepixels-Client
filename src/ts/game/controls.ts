@@ -1,6 +1,23 @@
 import { clientPlayer } from "../entity/client-player.js";
+import { selectWeapon } from "../ui/hud.js";
+import { draggableWindow } from "../ui/window.js";
+import { cinematicCameraEnabled } from "./camera.js";
 
 let keys = new Map<string, boolean>();
+let keybinds = {
+    left: "A",
+    right: "D",
+    up: "W",
+    down: "S",
+    attack: "LMB",
+    reload: "R",
+    hotbar1: "1",
+    hotbar2: "2",
+    hotbar3: "3",
+    hotbar4: "4",
+    hotbar5: "5",
+    hotbar6: "6",
+};
 
 let mouseX = 0;
 let mouseY = 0;
@@ -20,13 +37,24 @@ document.onkeydown = (e) => {
     // keys.set(key, performance.now());
     keys.set(key, true);
     if (clientPlayer.id != null) {
-        let weaponKeys = ["1", "2", "3", "4", "5"];
+        let weaponKeys = [keybinds.hotbar1, keybinds.hotbar2, keybinds.hotbar3, keybinds.hotbar4, keybinds.hotbar5, keybinds.hotbar6];
         for (let i = 0; i < clientPlayer.weapons.length; i++) {
             if (key == weaponKeys[i]) {
-                clientPlayer.controls.weapon = i;
+                selectWeapon(i);
             }
         }
+        if (key == "`") {
+            selectWeapon(-1);
+        }
     }
+    if (key == "E" && !cinematicCameraEnabled) {
+        draggableWindow.toggle();
+    }
+    // if (key == "Escape") {
+    //     if (!paused) {
+    //         pauseGame();
+    //     }
+    // }
 };
 document.onkeyup = (e) => {
     let key = e.key;
@@ -45,13 +73,13 @@ document.onkeyup = (e) => {
 document.getElementById("canvas").onmousedown = (e) => {
     let key: string | null = null;
     if (e.button == 0) {
-        key = "Left Mouse Button";
+        key = "LMB";
     }
     else if (e.button == 1) {
-        key = "Middle Mouse Button";
+        key = "MMB";
     }
     else if (e.button == 2) {
-        key = "Right Mouse Button";
+        key = "RMB";
     }
     if (key != null) {
         keys.set(key, true);
@@ -60,13 +88,13 @@ document.getElementById("canvas").onmousedown = (e) => {
 document.onmouseup = (e) => {
     let key: string | null = null;
     if (e.button == 0) {
-        key = "Left Mouse Button";
+        key = "LMB";
     }
     else if (e.button == 1) {
-        key = "Middle Mouse Button";
+        key = "MMB";
     }
     else if (e.button == 2) {
-        key = "Right Mouse Button";
+        key = "RMB";
     }
     if (key != null) {
         keys.set(key, false);
@@ -83,8 +111,18 @@ document.onmousemove = (e) => {
 
 document.getElementById("canvas").onwheel = (e) => {
     if (clientPlayer.id != null) {
-        clientPlayer.controls.weapon = (clientPlayer.controls.weapon + Math.sign(e.deltaY) + clientPlayer.weapons.length) % clientPlayer.weapons.length;
+        if (clientPlayer.controls.weapon == -1) {
+            if (e.deltaY > 0) {
+                selectWeapon(0);
+            }
+            else {
+                selectWeapon(clientPlayer.weapons.length - 1);
+            }
+        }
+        else {
+            selectWeapon((clientPlayer.controls.weapon + Math.sign(e.deltaY) + clientPlayer.weapons.length) % clientPlayer.weapons.length);
+        }
     }
 };
 
-export { keys, mouseX, mouseY };
+export { keys, keybinds, mouseX, mouseY };

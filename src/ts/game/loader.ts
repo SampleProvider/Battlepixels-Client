@@ -1,122 +1,59 @@
-import { serverIp } from "../../index.js";
+import { Projectile } from "../entity/projectile.js";
+import { Npc } from "../entity/npc.js";
+import { Monster } from "../entity/monster.js";
+import { StaticMap } from "../map/map.js";
+import { Cloud } from "../map/cloud.js";
+import { WeaponItem } from "../ui/item.js";
+import { loadPerks } from "../ui/perks.js";
+// import { loadQuests } from "../ui/quest.js";
+import { socket } from "../../index.js";
+import { loadChangelog } from "../ui/changelog.js";
 
 let images = new Map<string, HTMLImageElement>();
 
-let playerImage = new Image();
-playerImage.src = "/src/img/player.png";
-images.set("player", playerImage);
-
-interface ProjectileData {
-    image: string,
-    imageX?: number,
-    imageY?: number,
-    imageWidth?: number,
-    imageHeight?: number,
-    imageOffsetX?: number,
-    imageOffsetY?: number,
-    width: number,
-    height: number,
-    phantomFrames: number,
-    despawnTime: number,
-    gravity: number,
-    changeRotation: boolean,
-    collisionEvents: CollisionEvent[],
-}
-
-interface CollisionEvent {
-    type: string,
-    data: any,
-}
-
-interface WeaponCustomization {
-    [key: string]: {
-        images?: {
-            conditions?: {
-                [key: string]: string,
-            },
-            x: number,
-            y: number,
-            width: number,
-            height: number,
-            offsetX: number,
-            offsetY: number,
-        }[],
-        imageX?: number,
-        imageY?: number,
-        imageWidth?: number,
-        imageHeight?: number,
-        imageOffsetX?: number,
-        imageOffsetY?: number,
-        damage?: number,
-        critDamage?: number,
-        knockback?: number,
-        piercing?: number,
-        attackSpeed?: number,
-        projectileSpeed?: number,
-        projectileCount?: number,
-        projectileSpread?: number,
-        recoil?: number,
-        knockbackResistance?: number,
-        ammoMax?: number,
-        reloadSpeed?: number,
-    },
-}
-interface WeaponProjectile {
-    weight: number,
-    damage?: number,
-    critDamage?: number,
-    knockback?: number,
-    piercing?: number,
-    attackSpeed?: number,
-    projectileSpeed?: number,
-    projectileCount?: number,
-    projectileSpread?: number,
-    recoil?: number,
-    knockbackResistance?: number,
-    ammoMax?: number,
-    reloadSpeed?: number,
-}
-interface WeaponData {
-    image: string,
-    imageOffsetX: number,
-    imageOffsetY: number,
-    type: string,
-    offsetX: number,
-    offsetY: number,
-    damage: number,
-    critDamage: number,
-    knockback: number,
-    piercing: number,
-    attackSpeed: number,
-    projectile?: string,
-    projectiles?: {
-        [key: string]: WeaponProjectile
-    },
-    projectileSpeed: number,
-    projectileCount: number,
-    projectileSpread: number,
-    recoil: number,
-    knockbackResistance: number,
-    ammoMax: number,
-    reloadSpeed: number,
-    customizations: {
-        [key: string]: WeaponCustomization,
-    },
-}
-
-let projectileData: {[key: string]: ProjectileData} = await (await fetch(serverIp + "assets/projectiles.json")).json();
-for (let i in projectileData) {
+function loadImage(id: string, src: string) {
     let image = new Image();
-    image.src = "/src/img/" + projectileData[i].image;
-    images.set(projectileData[i].image, image);
-}
+    image.src = "/src/img/" + src;
+    images.set(id, image);
+};
 
+loadImage("player_uv_lookup", "player_uv_lookup.png");
+loadImage("player_uv_source", "player_uv_source.png");
+loadImage("player_color_lookup", "player_color_lookup.png");
+loadImage("healthbar", "healthbar.png");
+loadImage("gravestone", "gravestone.png");
+loadImage("parallax_background", "parallax_background.png");
+loadImage("tileset_terrains", "tileset_terrains.png");
+loadImage("tileset_plants", "tileset_plants.png");
+loadImage("tileset_decorations", "tileset_decorations.png");
+loadImage("tileset_special", "tileset_special.png");
 
-let weaponData: {[key: string]: WeaponData} = await (await fetch(serverIp + "assets/weapons.json")).json();
-for (let i in weaponData) {
-    let image = new Image();
-    image.src = "/src/img/" + weaponData[i].image;
-    images.set(weaponData[i].image, image);
-}
+let loaded = false;
 
-export { images, WeaponCustomization, projectileData, weaponData };
+async function load() {
+    try {
+        await Projectile.load();
+        await Npc.load();
+        await Monster.load();
+        await StaticMap.loadTileset("tileset_terrains");
+        await StaticMap.loadTileset("tileset_plants");
+        await StaticMap.loadTileset("tileset_decorations");
+        await StaticMap.loadTileset("tileset_special");
+        await Cloud.load();
+        await WeaponItem.load();
+        await loadChangelog();
+        await loadPerks();
+        // await loadQuests();
+        loaded = true;
+    }
+    catch (err) {
+        await new Promise((res) => {
+            setTimeout(res, 10);
+        });
+        await load();
+    }
+};
+
+load();
+
+export { images, loaded };

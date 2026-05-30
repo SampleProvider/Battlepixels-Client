@@ -3,4 +3,5 @@
     opacity: 0;
     transform: translateX(0%);
     transition: 1000ms ease-in opacity, 1000ms ease-in transform;
+    z-index: 2;
 }

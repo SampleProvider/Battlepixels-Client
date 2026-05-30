@@ -1,0 +1,19 @@
+#disconnectedButton {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    padding: 20px;
+    border: 8px solid #000000;
+    font-size: 64px;
+    color: #000000;
+    cursor: wait;
+    background-color: rgba(255, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    transition: transform 200ms ease-in-out, background-color 200ms ease-in-out;
+}
+#disconnectedButton:hover {
+    transform: translate(-50%, -50%) scale(2);
+}
+#disconnectedButton:active {
+    background-color: red;
+}

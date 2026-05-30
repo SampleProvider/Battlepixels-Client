@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Battlepixels Tileset Generator</title>
+    <link rel="icon" href="./img/favicon.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0px;
+            overflow: hidden;
+            --border-size: 1px;
+        }
+
+        * {
+            box-sizing: content-box;
+        }
+        #body {
+            display: grid;
+            grid-gap: 4px;
+            border: 2px solid black;
+            margin: 8px;
+            padding: 8px;
+            grid-template-columns: auto auto;
+            text-align: center;
+        }
+        #title {
+            font-size: 40px;
+            grid-column: span 2;
+        }
+        #body label {
+            text-align: right;
+        }
+        #body input {
+            grid-column: 2;
+            width: 300px;
+        }
+        #body select {
+            grid-column: 2;
+            width: 306px;
+        }
+        #body button {
+            grid-column: 2;
+            min-width: 100px;
+            width: 292px;
+        }
+</style>
+</head>
+
+<body>
+    <div id="body">
+        <div id="title">Battlepixels Tileset Generator</div>
+        <label for="input">Upload File:</label>
+        <input type="file" id="input">
+        <button id="generateButton">Generate!</button>
+        <script>
+            let uvLookup = new Image();
+            uvLookup.src = "/src/img/player_uv_lookup.png";
+            let colorLookup = new Image();
+            colorLookup.src = "/src/img/player_uv_lookup_new2.png";
+            let uvSource = new Image();
+            uvSource.src = "/src/img/player_uv_source.png";
+
+            setTimeout(() => {
+                let colorMap = new Map();
+
+
+                let uvLookupCanvas = new OffscreenCanvas(uvLookup.width, uvLookup.height);
+                let uvLookupCtx = uvLookupCanvas.getContext("2d");
+                uvLookupCtx.drawImage(uvLookup, 0, 0);
+                let uvLookupData = uvLookupCtx.getImageData(0, 0, uvLookup.width, uvLookup.height).data;
+
+                let colorLookupCanvas = new OffscreenCanvas(uvLookup.width, uvLookup.height);
+                let colorLookupCtx = colorLookupCanvas.getContext("2d");
+                colorLookupCtx.drawImage(colorLookup, 0, 0);
+
+                let colorLookupData = colorLookupCtx.getImageData(0, 0, uvLookup.width, uvLookup.height).data;
+                for (let y = 0; y < uvLookup.height; y++) {
+                    for (let x = 0; x < uvLookup.width; x++) {
+                        if (uvLookupData.subarray((x + y * uvLookup.width) * 4, (x + y * uvLookup.width) * 4 + 4)[3] != 0) {
+                            colorMap.set(uvLookupData.subarray((x + y * uvLookup.width) * 4, (x + y * uvLookup.width) * 4 + 4).toString(), colorLookupData.subarray((x + y * uvLookup.width) * 4, (x + y * uvLookup.width) * 4 + 4))
+                        }
+                    }
+                }
+                
+                let uvSourceCanvas = new OffscreenCanvas(uvSource.width, uvSource.height);
+                let uvSourceCtx = uvSourceCanvas.getContext("2d");
+                uvSourceCtx.drawImage(uvSource, 0, 0);
+                
+                let prerenderCanvas = document.createElement("canvas");
+                prerenderCanvas.width = uvSource.width;
+                prerenderCanvas.height = uvSource.height;
+                let prerenderCtx = prerenderCanvas.getContext("2d");
+
+                let uvSourceData = uvSourceCtx.getImageData(0, 0, uvSource.width, uvSource.height).data;
+                for (let y = 0; y < uvSource.height; y++) {
+                    for (let x = 0; x < uvSource.width; x++) {
+                        let color = colorMap.get(uvSourceData.subarray((x + y * uvSource.width) * 4, (x + y * uvSource.width) * 4 + 4).toString());
+                        if (color != null) {
+                            prerenderCtx.fillStyle = "rgb(" + color[0] + ", " + color[1] + ", " + color[2] + ", " + color[3] / 255 + ")";
+                            prerenderCtx.fillRect(x, y, 1, 1);
+                        }
+                    }
+                }
+
+                prerenderCanvas.toBlob(function(blob) {
+                    const a = document.createElement("a");
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "output.png";
+                    a.click();
+                });
+            }, 2000);
+        </script>
+    </div>
+</body>
+
+</html>
