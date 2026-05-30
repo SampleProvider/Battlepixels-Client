@@ -89,6 +89,31 @@ img {
     transform: translateY(0px);
 }
 
+#connectionError {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    width: 50vw;
+    height: 50vh;
+    border: 8px solid black;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 40px;
+}
+#connectionErrorTitle {
+    font-size: 8vw;
+    text-align: center;
+    margin-bottom: 20px;
+}
+#connectionErrorText {
+    font-size: 32px;
+    text-align: center;
+}
+#connectionErrorText a {
+    font-size: 32px;
+    text-align: center;
+}
+
 #tooltip {
     position: absolute;
     border: 4px solid black;
