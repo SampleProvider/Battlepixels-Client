@@ -189,11 +189,11 @@ socket.on("updateData", (data) => {
                 entity.hp = data.entity[i].hp;
                 entity.hpMax = data.entity[i].hpMax;
                 entity.drawHp = data.entity[i].drawHp;
-                if (data.entity[i].weapon.id != entity.weapon.id) {
+                if (data.entity[i].weapon?.id != entity.weapon?.id) {
                     entity.weapon = data.entity[i].weapon;
                     Player.prerenderWeapon(entity.weapon);
                 }
-                else {
+                else if (data.entity[i].weapon != null) {
                     for (let j in data.entity[i].weapon.customizations) {
                         if (data.entity[i].weapon.customizations[j] != entity.weapon.customizations[j]) {
                             entity.weapon = data.entity[i].weapon;
