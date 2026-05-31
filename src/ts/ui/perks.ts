@@ -91,13 +91,13 @@ class Perk {
 }
 
 function drawPerks() {
-    perkCtx.resetTransform();
-    perkCtx.save();
-    perkCtx.translate(perkCameraX + perkCanvas.width / 2, perkCameraY + perkCanvas.height / 2);
-    for (let [_, perk] of Perk.list) {
-        perk.draw(perkCtx);
-    }
-    perkCtx.restore();
+    // perkCtx.resetTransform();
+    // perkCtx.save();
+    // perkCtx.translate(perkCameraX + perkCanvas.width / 2, perkCameraY + perkCanvas.height / 2);
+    // for (let [_, perk] of Perk.list) {
+    //     perk.draw(perkCtx);
+    // }
+    // perkCtx.restore();
 };
 
 async function loadPerks() {

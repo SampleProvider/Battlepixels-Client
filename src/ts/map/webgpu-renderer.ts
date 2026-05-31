@@ -10,7 +10,7 @@ import { images } from "../game/loader.js";
 const adapter = await (navigator as any).gpu?.requestAdapter();
 const device = await adapter?.requestDevice();
 
-const webgpuSupported = device != null;
+const webgpuSupported = new URLSearchParams(window.location.search).get("noWebgpu") && device != null;
 
 const format = (navigator as any).gpu?.getPreferredCanvasFormat();
 const textureFormat = "rgba8unorm";
