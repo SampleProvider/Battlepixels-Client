@@ -27,6 +27,8 @@ let perkCtx = perkCanvas.getContext("2d");
 let rect = perkCanvas.getBoundingClientRect();
 perkCanvas.width = rect.width;
 perkCanvas.height = rect.height;
+perkCanvas.width = 1038;
+perkCanvas.height = 758;
 
 let perkCameraX = 0;
 let perkCameraY = 0;
@@ -86,12 +88,17 @@ class Perk {
         ctx.stroke();
         ctx.fill();
     }
-    static drawAll() {
-        for (let [_, perk] of Perk.list) {
-            perk.draw(perkCtx);
-        }
-    }
 }
+
+function drawPerks() {
+    perkCtx.resetTransform();
+    perkCtx.save();
+    perkCtx.translate(perkCameraX + perkCanvas.width / 2, perkCameraY + perkCanvas.height / 2);
+    for (let [_, perk] of Perk.list) {
+        perk.draw(perkCtx);
+    }
+    perkCtx.restore();
+};
 
 async function loadPerks() {
     Perk.data = await (await fetch(serverIp + "assets/perks.json")).json();
@@ -276,4 +283,4 @@ function setPerkPoints(newPerkPoints: number) {
 // });
 
 // export { perks, perkPoints, unlockedPerks, loadPerks, setPerks, setPerkPoints };
-export { perks, perkPoints, unlockedPerks, Perk, loadPerks, setPerks, setPerkPoints };
+export { perks, perkPoints, unlockedPerks, Perk, loadPerks, setPerks, setPerkPoints, drawPerks };

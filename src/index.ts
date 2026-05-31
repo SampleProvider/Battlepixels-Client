@@ -30,6 +30,8 @@ async function checkConnection() {
             document.getElementById("webgpuCanvas").style.display = "none";
             document.getElementById("menuScreen").style.display = "none";
             document.getElementById("connectionError").style.display = "revert-layer";
+            (document.getElementById("connectionErrorLink") as HTMLLinkElement).href = serverIp;
+            document.getElementById("connectionErrorLink").innerText = serverIp;
         }
     }
 };

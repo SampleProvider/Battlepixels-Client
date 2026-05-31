@@ -19,6 +19,7 @@ import { drawCustomizations, prerenderCustomizations } from "../ui/customization
 import { currentWeather, initWeather, updateWeather } from "../map/weather.js";
 import { drawHud, initAllWeapons, initWeapon, tickGraph, updateHud } from "../ui/hud.js";
 import { loaded } from "./loader.js";
+import { drawPerks } from "../ui/perks.js";
 
 const canvas: HTMLCanvasElement = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d");
@@ -893,6 +894,7 @@ function updateFrame() {
         drawHud(aboveOffscreenCtx);
         updateHud();
         drawCustomizations();
+        drawPerks();
 
         tickGraph.update(performance.now() - lastFrame);
     }
