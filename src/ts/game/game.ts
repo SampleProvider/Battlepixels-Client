@@ -902,6 +902,12 @@ function updateFrame() {
         // ctx.drawImage(belowOffscreenCanvas, 0, 0);
         ctx.drawImage(aboveOffscreenCanvas, 0, 0);
     }
+    if (mapRenderer instanceof OffscreenCanvasMapRenderer) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(backgroundOffscreenCanvas, 0, 0);
+        ctx.drawImage(belowOffscreenCanvas, 0, 0);
+        ctx.drawImage(aboveOffscreenCanvas, 0, 0);
+    }
     lastFrame = performance.now();
     // if (clientPhysicsEnabled || clientPlayer.map == "menu") {
     window.requestAnimationFrame(updateFrame);

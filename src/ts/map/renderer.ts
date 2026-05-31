@@ -302,7 +302,7 @@ class OffscreenCanvasMapRenderer extends MapRenderer {
         super.setMap(map);
         this.canvas = new OffscreenCanvas(this.map.width * 8, this.map.height * 8);
         this.ctx = this.canvas.getContext("2d");
-        this.parallaxCanvas = new OffscreenCanvas(this.map.width * 4, this.map.height * 4);
+        this.parallaxCanvas = new OffscreenCanvas(this.map.width * 8, this.map.height * 8);
         this.parallaxCtx = this.parallaxCanvas.getContext("2d");
         this.backgroundCanvas = new OffscreenCanvas(this.map.width * 8, this.map.height * 8);
         this.backgroundCtx = this.backgroundCanvas.getContext("2d");
@@ -380,6 +380,7 @@ class OffscreenCanvasMapRenderer extends MapRenderer {
         }
         this.ctx.globalAlpha = 1;
         this.parallaxCtx.globalAlpha = 1;
+        this.parallaxCtx.drawImage(images.get("parallax_background"), this.map.width * 4 - images.get("parallax_background").width / 2, this.map.height * 4 - images.get("parallax_background").height / 2);
     }
     drawLight(light: Light, occlusionImageData: ImageDataArray, entityOcclusionImageData: ImageDataArray) {
         let rays = light.spread / Math.PI * 180;
